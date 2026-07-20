@@ -4,6 +4,18 @@ import { db } from "../../db";
 import { users } from "../../db/schema";
 
 export default async (req: Request, context: Context) => {
+
+  if (req.method === 'OPTIONS') {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:5173',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
   if (req.method === "GET") {
     const allUsers = await db.select().from(users).orderBy(desc(users.createdAt));
 
